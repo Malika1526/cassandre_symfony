@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 class Client
@@ -14,9 +15,23 @@ class Client
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: "Le nom est obligatoire.")]
+    #[Assert\Regex('/^[a-zA-Z\s]+$/', message: 'Le nom doit contenir du texte uniquement')]   
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: "Le nom doit contenir au moins {{ limit }} caractères.",
+        maxMessage: "Le nom ne doit pas dépasser {{ limit }} caractères."
+    )]
     private ?string $nom = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: "L'email est obligatoire.")]
+    #[Assert\Email(message: "L'adresse email '{{ value }}' n'est pas valide.")]
+    #[Assert\Length(
+        max: 100,
+        maxMessage: "L'email ne doit pas dépasser {{ limit }} caractères."
+    )]
     private ?string $email = null;
 
     public function getId(): ?int
