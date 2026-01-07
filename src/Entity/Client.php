@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
+#[UniqueEntity(fields: ['email'], message: "Cet email est déjà utilisé.")]
 class Client
 {
     #[ORM\Id]
@@ -16,7 +18,7 @@ class Client
 
     #[ORM\Column(length: 100)]
     #[Assert\NotBlank(message: "Le nom est obligatoire.")]
-    #[Assert\Regex('/^[a-zA-Z\s]+$/', message: 'Le nom doit contenir du texte uniquement')]   
+    #[Assert\Regex('/^[a-zA-Z\s]+$/', message: 'Le nom doit contenir du texte uniquement')]
     #[Assert\Length(
         min: 2,
         max: 100,
@@ -32,6 +34,7 @@ class Client
         max: 100,
         maxMessage: "L'email ne doit pas dépasser {{ limit }} caractères."
     )]
+
     private ?string $email = null;
 
     public function getId(): ?int
