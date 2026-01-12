@@ -22,6 +22,7 @@ class ClientType extends AbstractType
                 'attr' => [
                     'maxlength' => 100,
                     'placeholder' => 'Ex: Marie Dupont',
+                    'aria-required' => 'true',
                 ],
             ])
             ->add('email', EmailType::class, [
@@ -29,6 +30,7 @@ class ClientType extends AbstractType
                 'attr' => [
                     'maxlength' => 100,
                     'placeholder' => 'ex: marie@domaine.fr',
+                    'aria-required' => 'true'
                 ],
             ]);
     }
