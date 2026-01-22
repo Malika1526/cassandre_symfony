@@ -20,6 +20,11 @@ class AppFixtures extends Fixture
         $client2->setEmail('leclerc@gmail.com');
         $manager->persist($client2);
 
+        $client3 = new Client();
+        $client3->setNom('Test plaine image');
+        $client3->setEmail('test_plaine_image@outlook.fr');
+        $manager->persist($client3);
+
         $manager->flush();
     }
 }
