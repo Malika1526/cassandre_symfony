@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+<h1>Dashboard</h1>
+
+<p>Bienvenue {{ app.user.email }}</p>
+
+{% if is_granted('ROLE_ADMIN') %}
+    <section>
+        <h2>Administration</h2>
+        <ul>
+            <li>Gestion des utilisateurs</li>
+            <li>Vue globale des audits</li>
+        </ul>
+    </section>
+{% endif %}
+
+{% if is_granted('ROLE_AUDITOR') %}
+    <section>
+        <h2>Mes audits</h2>
+        <p>Audits qui me sont assignés</p>
+    </section>
+{% endif %}
+
+{% if is_granted('ROLE_CLIENT') %}
+    <section>
+        <h2>Mes audits clients</h2>
+        <p>Accès uniquement à mes audits</p>
+    </section>
+{% endif %}
+
+{% if is_granted('ROLE_CANDIDATE') %}
+    <section>
+        <h2>Mon dossier candidat</h2>
+        <p>Suivi de mon dossier personnel</p>
+    </section>
+{% endif %}
+
