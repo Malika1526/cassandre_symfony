@@ -3,11 +3,20 @@
 namespace App\DataFixtures;
 
 use App\Entity\Client;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 class AppFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $passwordHasher;
+    
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
     public function load(ObjectManager $manager): void
     {
         $client = new Client();
@@ -15,15 +24,14 @@ class AppFixtures extends Fixture
         $client->setEmail('dupont@dev.com');
         $manager->persist($client);
 
-        $client2 = new Client();
-        $client2->setNom('Leclerc');
-        $client2->setEmail('leclerc@gmail.com');
-        $manager->persist($client2);
+        $user = new User();
+        $user->setEmail('test_plaine_image@outlook.fr');
+        $user->setRoles(['ROLE_USER']);
+        $user->setPassword(
+            $this->passwordHasher->hashPassword($user, 'password')
+        );
 
-        $client3 = new Client();
-        $client3->setNom('Test plaine image');
-        $client3->setEmail('test_plaine_image@outlook.fr');
-        $manager->persist($client3);
+        $manager->persist($user);
 
         $manager->flush();
     }
