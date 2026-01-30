@@ -38,11 +38,7 @@
 						{% for client in clients %}
 							<tr class="align-middle">
 								<td class="fw-bold">#{{ client.id }}</td>
-								<td>
-									<div>
-										<strong>{{ client.nom }}</strong>
-									</div>
-								</td>
+								<td><strong>{{ client.nom }}</strong></td>
 								<td>
 									<i class="fas fa-envelope text-muted me-2"></i>
 									{{ client.email }}
